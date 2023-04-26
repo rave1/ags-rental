@@ -42,8 +42,14 @@ INSTALLED_APPS = [
     "inventory",
     "rental",
     # LIBRARIES
-    "django_extensions"
+    "django_extensions",
+    "crispy_forms",
+    "crispy_bootstrap4",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -60,7 +66,9 @@ ROOT_URLCONF = "ags_rental.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            'ags_rental/templates/'
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

@@ -7,6 +7,8 @@ class Case(models.Model):
     name = models.CharField(max_length=512)
     quantity = models.PositiveIntegerField()
     qr_code = models.ImageField(blank=True, null=True, upload_to='images/cases/')
+    contains = models.JSONField(default=list)
+
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
