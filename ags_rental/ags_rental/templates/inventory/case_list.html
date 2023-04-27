@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Detal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for case in object_list %}
+      <tr> 
+        <th scope="row">{{ case.id }}</th>
+        <td>{{ case.name }}</td>
+        <td><a href="{% url 'case-detail' case.id %}" /> Detal</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="display-3"> {{ case.id }}. {{ case.name }}</h1>
+<img src="{{ case.qr_code.url }}" alt="qr_code" class="img-fluid"/>
+
+{% endblock %}

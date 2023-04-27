@@ -3,6 +3,8 @@ from django.template import loader
 from inventory.forms import CaseForm
 from django.shortcuts import render
 from django.views import View
+from django.views.generic import DetailView, ListView
+from inventory.models import Case, Device
 
 # Create your views here.
 
@@ -30,3 +32,11 @@ class CaseView(View):
             form.save()
         self.context['article_form'] = form
         return render(request, 'case_form.html', self.context)
+
+
+class CaseListView(ListView):
+    model = Case
+
+
+class CaseDetailView(DetailView):
+    model = Case

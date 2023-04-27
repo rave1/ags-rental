@@ -1,7 +1,7 @@
 from django.urls import path
 
-from rental.views import rental_view
+from rental.views import rental_view, RentalList
 
 urlpatterns = [
-    path('rental/', rental_view)
+    path('rentals/', RentalList.as_view(), name='rental-list')
 ]
