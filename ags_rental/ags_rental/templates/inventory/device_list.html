@@ -1,21 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="display-3"> {{ case.id }}. {{ case.name }}</h1>
-<img src="{{ case.qr_code.url }}" alt="qr_code" class="img-fluid"/>
-<h3>Zawiera: </h3>
+
+<a class="btn btn-primary" href="{% url 'devices-add' %}" role="button">Dodaj urządzenie</a>
 <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Nazwa</th>
+        <th scope="col">Detal</th>
       </tr>
     </thead>
     <tbody>
-        {% for device in case.devices.all %}
+      {% for device in object_list %}
       <tr> 
         <th scope="row">{{ device.id }}</th>
         <td>{{ device.name }}</td>
+        <td><a href="{% url 'device-detail' device.id %}" /> Detal</td>
       </tr>
       {% endfor %}
     </tbody>

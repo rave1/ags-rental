@@ -7,7 +7,7 @@ class Case(models.Model):
     name = models.CharField(max_length=512)
     quantity = models.PositiveIntegerField()
     qr_code = models.ImageField(blank=True, null=True, upload_to='images/cases/')
-    contains = models.JSONField(default=list)
+    devices = models.ManyToManyField('Device')
 
 
     def save(self, *args, **kwargs):
@@ -34,3 +34,6 @@ class Device(models.Model):
             qr_code.save(f'images/devices/{self.id}_device_qr_code.png')
         self.qr_code = f'images/devices/{self.id}_device_qr_code.png'
         super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return self.name
