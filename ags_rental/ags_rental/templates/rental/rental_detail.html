@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="display-3">{{ rental.id }}. {{rental.person.name}} {{ rental.created_at}}</h1>
+
+<h5>Kejsy</h5>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Detal</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for case in rental.cases.all %}
+      <tr> 
+        <th scope="row">{{ case.id }}</th>
+        <td>{{ case.name }}</td>
+        <td><a href="{% url 'case-detail' case.id %}" /> Detal</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+Urządzenia: {% for device in rental.devices.all %} {{ device.name }} {% endfor %}
+Kejsy: {% for case in rental.cases.all %} {{ case.name }} {% endfor %}
+{% endblock %}

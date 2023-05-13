@@ -2,7 +2,7 @@ import io
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from rental.models import Rental, Person
 
 def rental_view(request):
@@ -20,4 +20,8 @@ def rental_view(request):
 
 
 class RentalList(ListView):
+    model = Rental
+
+
+class RentalDetail(DetailView):
     model = Rental
