@@ -14,7 +14,7 @@
       <tr> 
         <th scope="row">{{ rental.id }}</th>
         <td>{{ rental.person.name}}, {{ rental.created_at }} </td>
-        {% comment %} <td><a href="{% url 'rental-detail' rental.id %}" /> Detal</td> {% endcomment %}
+        <td><a href="{% url 'rental-detail' rental.id %}" /> Detal</td>
       </tr>
       {% endfor %}
     </tbody>
