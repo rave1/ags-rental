@@ -5,27 +5,11 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView, ListView, CreateView
 from inventory.models import Case, Device
-
-# Create your views here.
-
-
-def case_template(request):
-    if request.POST:
-        form = CaseForm(request.POST, request.FILES)
-        print(request.POST, request.FILES)
-        form.save()
-    context = {'article_form': CaseForm}
-    return render(request, 'case_form.html', context)
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
-def add_device(request):
-    if request.POST:
-        form = DeviceForm(request.POST, request.FILES)
-        form.save()
-    context = {'device_form': DeviceForm}
-    return render(request, 'device_form.html', context)
-
-
+@method_decorator(login_required, name='dispatch')
 class AddDevice(CreateView):
     model = Device
     form_class = DeviceForm
@@ -38,6 +22,7 @@ class AddDevice(CreateView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class AddCase(CreateView):
     model = Case
     form_class = CaseForm
@@ -50,6 +35,7 @@ class AddCase(CreateView):
         return context
 
 
+@method_decorator(login_required, name='dispatch')
 class CaseView(View):
     context = {}
 
@@ -66,17 +52,21 @@ class CaseView(View):
         return render(request, 'case_form.html', self.context)
 
 
+@method_decorator(login_required, name='dispatch')
 class CaseListView(ListView):
     model = Case
 
 
+@method_decorator(login_required, name='dispatch')
 class CaseDetailView(DetailView):
     model = Case
 
 
+@method_decorator(login_required, name='dispatch')
 class DeviceListView(ListView):
     model = Device
 
 
+@method_decorator(login_required, name='dispatch')
 class DeviceDetailView(DetailView):
     model = Device

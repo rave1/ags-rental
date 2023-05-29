@@ -1,6 +1,6 @@
 from django.urls import path
 
-from rental.views import rental_view, RentalList, RentalDetail, CreateRentalView, RentalFormView, RentalInvoiceView
+from rental.views import RentalList, RentalDetail, CreateRentalView, RentalFormView, RentalInvoiceView
 
 urlpatterns = [
     path('rentals/', RentalList.as_view(), name='rental-list'),

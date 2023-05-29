@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from inventory.views import AddCase, CaseView, CaseDetailView, CaseListView, DeviceListView, DeviceDetailView, add_device, AddDevice
+from inventory.views import AddCase, CaseView, CaseDetailView, CaseListView, DeviceListView, DeviceDetailView, AddDevice
 
 urlpatterns = [
     path('cases/', CaseListView.as_view(), name='case-list'),

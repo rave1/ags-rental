@@ -1,42 +1,42 @@
 import io
-from typing import Any
 
 from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.db.models.query import QuerySet
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView
 from django.views import View
-from rental.models import Rental, Person
+from rental.models import Rental
 from rental.forms import RentalForm
-from rental.serializers import RentalSerializer
+
 from inventory.models import Case
-from django.http import HttpResponse
-from xhtml2pdf import pisa
 
-def rental_view(request):
-    buffer = io.BytesIO()
+# @method_decorator(login_required, name='dispatch')
+# def rental_view(request):
+#     buffer = io.BytesIO()
 
-    p = canvas.Canvas(buffer)
+#     p = canvas.Canvas(buffer)
 
-    p.drawString(100, 100, "Hello world.")
-    p.showPage()
-    p.save()
+#     p.drawString(100, 100, "Hello world.")
+#     p.showPage()
+#     p.save()
 
-    buffer.seek(0)
+#     buffer.seek(0)
 
-    return FileResponse(buffer, as_attachment=False, filename='hello.pdf')
+#     return FileResponse(buffer, as_attachment=False, filename='hello.pdf')
 
-
+@method_decorator(login_required, name='dispatch')
 class RentalList(ListView):
     model = Rental
 
-
+@method_decorator(login_required, name='dispatch')
 class RentalDetail(DetailView):
     model = Rental
 
@@ -50,7 +50,7 @@ class RentalDetail(DetailView):
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
-
+@method_decorator(login_required, name='dispatch')
 class CreateRentalView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'inventory/case_list.html'
@@ -65,7 +65,7 @@ class CreateRentalView(APIView):
         queryset = Case.objects.filter(id__in=request.session['cases'])
         return Response({'object_list': queryset})
 
-
+@method_decorator(login_required, name='dispatch')
 class RentalFormView(View):
     context = {}
 
@@ -81,8 +81,8 @@ class RentalFormView(View):
         self.context['rental_form'] = form
         return render(request, 'rental_form.html', self.context)
 
-from django.template.loader import get_template
 
+@method_decorator(login_required, name='dispatch')
 class RentalInvoiceView(DetailView):
     template_name = 'rental/test_invoice.html'
     model = Rental
