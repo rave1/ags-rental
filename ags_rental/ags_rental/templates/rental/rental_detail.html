@@ -2,7 +2,7 @@
 {% block content %}
 
 <h1 class="display-3">{{ rental.id }}. {{rental.person.name}} {{ rental.created_at}}</h1>
-
+<button onClick="printInvoice()" type="button" class="btn btn-success">Drukuj dokument</button>
 <h5>Kejsy</h5>
 <table class="table table-striped">
     <thead>
@@ -26,4 +26,12 @@
 
 Urządzenia: {% for device in rental.devices.all %} {{ device.name }} {% endfor %}
 Kejsy: {% for case in rental.cases.all %} {{ case.name }} {% endfor %}
+
+<script>
+  function printInvoice() {
+    const dupa = window.open('http://localhost:8000/rental-invoice/4/')
+    dupa.print()
+  }
+</script>
+
 {% endblock %}

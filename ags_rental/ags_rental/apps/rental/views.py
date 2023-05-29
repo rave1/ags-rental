@@ -1,5 +1,8 @@
 import io
 from typing import Any
+
+from django.forms.models import model_to_dict
+
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,11 +10,14 @@ from django.db.models.query import QuerySet
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views import View
 from rental.models import Rental, Person
 from rental.forms import RentalForm
+from rental.serializers import RentalSerializer
 from inventory.models import Case
+from django.http import HttpResponse
+from xhtml2pdf import pisa
 
 def rental_view(request):
     buffer = io.BytesIO()
@@ -63,7 +69,6 @@ class CreateRentalView(APIView):
 class RentalFormView(View):
     context = {}
 
-
     def get(self, request):
         form = RentalForm({'cases': request.session['cases']}, queryset=request.session['cases'])
         self.context['rental_form'] = form
@@ -75,3 +80,17 @@ class RentalFormView(View):
             form.save()
         self.context['rental_form'] = form
         return render(request, 'rental_form.html', self.context)
+
+from django.template.loader import get_template
+
+class RentalInvoiceView(DetailView):
+    template_name = 'rental/test_invoice.html'
+    model = Rental
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        rental_serialized_data = model_to_dict(self.object)
+        context['rental_serialized'] = rental_serialized_data
+        print(context)
+        return self.render_to_response(context)
