@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # APPS
     "inventory",
     "rental",
+    'accounts',
     # LIBRARIES
     "django_extensions",
     "crispy_forms",
